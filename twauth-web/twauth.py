@@ -25,7 +25,7 @@ show_user_url = "https://api.twitter.com/2/users/me"
 
 APP_CONSUMER_KEY = os.environ.get("CONSUMER_KEY") or "1"
 APP_CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET") or "2"
-callback_url = os.environ.get("CALLBACK_URL") or "http://127.0.0.1:8888/callback"
+callback_url = os.environ.get("CALLBACK_URL") or "http://8.219.200.55:8888/callback"
 
 oauth_store = {}
 
@@ -165,7 +165,7 @@ class RunServer:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     options.define("p", default=8888, help="running port", type=int)
-    options.define("h", default="127.0.0.1", help="listen address", type=str)
+    options.define("h", default="0.0.0.0", help="listen address", type=str)
     options.parse_command_line()
     p = options.options.p
     h = options.options.h

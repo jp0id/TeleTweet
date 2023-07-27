@@ -10,7 +10,7 @@ Environment="consumerKey=123444"
 Environment="consumerSecret=123444"
 Environment="accessToken=2111"
 Environment="accessSecret=123131"
-Environment="owner=123131"
+Environment="allowUser=123131"
 ExecStart=/usr/bin/python3 /home/TeleTweet/teletweet/bot.py
 
 [Install]

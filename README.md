@@ -135,7 +135,7 @@ cd TeleTweet
 pip3 install -r requirements.txt
 vim teletweet/config.py
 # setup bot token, consumer key, consumer secret, app id, app secret
-python3 teletweet/bot.py
+python3 teletweet/tweetbot.py
 ```
 
 If you want the bot to be only available to you, please setup `ALLOW_USER` with your own Telegram User ID.

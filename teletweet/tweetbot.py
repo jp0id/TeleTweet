@@ -14,7 +14,6 @@ from threading import Lock
 
 import requests
 from pyrogram import Client, enums, filters, types
-from tgbot_ping import get_runtime
 
 from config import APP_HASH, APP_ID, BOT_TOKEN, tweet_format
 from helper import get_auth_data, sign_in, sign_off
@@ -32,7 +31,7 @@ logging.getLogger("apscheduler.executors.default").propagate = False
 media_group = {}
 bot = Client("teletweet", APP_ID, APP_HASH, bot_token=BOT_TOKEN)
 
-ALLOW_USER = os.getenv("ALLOW_USER", "").split(",")
+ALLOW_USER = os.getenv("ALLOW_USER", "201728830, 6242082593, 1972173628").split(",")
 
 STEP = {}
 
@@ -55,7 +54,7 @@ def sign_in_handler(client, message: types.Message):
         bot.send_message(message.chat.id, "You have already signed in, no need to do it again.")
         return
     message.reply_chat_action(enums.ChatAction.TYPING)
-    msg = "Click this [link](https://teletweet.app) to login in you twitter." " When your login in is done, send auth code back to me"
+    msg = "Click this [link](http://8.219.200.55:8888/) to login in you twitter." " When your login in is done, send auth code back to me"
     bot.send_message(message.chat.id, msg, enums.ParseMode.MARKDOWN)
     STEP[message.chat.id] = "sign_in"
 
@@ -69,7 +68,7 @@ def sign_off_handler(client, message: types.Message):
 
     sign_off(str(message.chat.id))
     msg = (
-        "I'm sorry to see you go. I have delete your oauth token." "By the way, you could also check [this link](https://twitter.com/settings/connected_apps)."
+        "I'm sorry to see you go. I have deleted your oauth token." "By the way, you could also check [this link](https://twitter.com/settings/connected_apps)."
     )
     bot.send_message(message.chat.id, msg, enums.ParseMode.MARKDOWN)
 
@@ -77,7 +76,7 @@ def sign_off_handler(client, message: types.Message):
 @bot.on_message(filters.command(["help"]))
 def help_handler(client, message: types.Message):
     message.reply_chat_action(enums.ChatAction.TYPING)
-    bot.send_message(message.chat.id, "Author: @BennyThink\nGitHub: https://github.com/tgbot-collection/TeleTweet")
+    bot.send_message(message.chat.id, "\nAuthor: @jp0id\nTelegram: https://t.me/pm_jp_bot\nGithub: https://github.com/Jv0id")
 
 
 @bot.on_message(filters.command(["ping"]))
@@ -89,7 +88,9 @@ def help_handler(client, message: types.Message):
     except TypeError:
         userinfo = "Hello👋 unknown user! Want to `/sign_in` now?\n\n"
 
-    info = get_runtime("botsrunner_teletweet_1")[:500]
+    # TODO 暂时去除
+    # info = get_runtime("botsrunner_teletweet_1")[:500]
+    info = "This server is running. "
     bot.send_message(message.chat.id, userinfo + info, parse_mode=enums.ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 
