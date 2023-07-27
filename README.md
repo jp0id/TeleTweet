@@ -150,13 +150,14 @@ You can run/develop using docker. You can refer to `docker-compose.yml`
 ```shell
 echo "{}"> env/auth.json
 vim env/teletweet.env
-# set up below config
-BOT_TOKEN = os.getenv("TOKEN", "fghjk789")
-APP_ID = os.getenv("APP_ID", "456fgh78")
-APP_HASH = os.getenv("APP_HASH", "456gfhj78")
-
-CONSUMER_KEY = os.getenv("CONSUMER_KEY", "456fghj78")
-CONSUMER_SECRET = os.getenv("CONSUMER_SECRET", "45678fghj")
+# set these config
+TOKEN=123
+APP_ID=123
+APP_HASH=123
+CONSUMER_KEY=123123
+CONSUMER_SECRET=123123
+ALLOW_USER=123,1234,123123
+CALLBACK_URL=http://1.2.3.4:8888/callback #your ip
 
 docker-compose up -d
 
