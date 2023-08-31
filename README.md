@@ -40,7 +40,7 @@ The most simple way to tweet!
 
 ## Sign in
 
-Chat with [this bot](https://t.me/tele_tweetbot), and go to oauth by its instruction:
+Chat with [this bot](https://t.me/JPTweetForwardBot), and go to oauth by its instruction:
 ![](assets/intro.png)
 
 Copy and paste the auth code to this bot. And you're good to go!
@@ -104,7 +104,7 @@ This bot use oauth, so you need to apply an app, setup callback url.
 2. Create a project
 3. Create an app and attach it to your project. Remember API key and API secret key!
 4. User authentication settings, Click Edit and enable OAuth
-5. App permissions Read/Write, Web App, Automated App or Bot, Callback `http://127.0.0.1:8888/callback`
+5. App permissions Read/Write, Web App, Automated App or Bot, Callback `http://YOUR_IP:8888/callback`
 
 ## Setup Telegram APP ID
 
@@ -119,18 +119,18 @@ vim twauth.py
 # CONSUMER_SECRET ---> API secret key
 APP_CONSUMER_KEY = os.environ.get("CONSUMER_KEY") or '1'
 APP_CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET") or '2'
-callback_url = os.environ.get("CALLBACK_URL") or "http://127.0.0.1:8888/callback"
+callback_url = os.environ.get("CALLBACK_URL") or "http://YOUR_IP:8888/callback"
 
 # run it
 python3 twauth.py
 ```
 
-Open `http://127.0.0.1:8888` in your browser and follow the instructions.
+Open `http://YOUR_IP:8888` in your browser and follow the instructions.
 
 ## Run Bot
 
 ```shell script
-git clone https://github.com/tgbot-collection/TeleTweet/
+git clone https://github.com/Jv0id/TeleTweet/
 cd TeleTweet
 pip3 install -r requirements.txt
 vim teletweet/config.py
@@ -157,7 +157,7 @@ APP_HASH=123
 CONSUMER_KEY=123123
 CONSUMER_SECRET=123123
 ALLOW_USER=123,1234,123123
-CALLBACK_URL=http://1.2.3.4:8888/callback #your ip
+CALLBACK_URL=http://YOUR_IP:8888/callback #your ip
 
 docker-compose up -d
 
@@ -173,7 +173,7 @@ docker-compose up -d
 
 # Credits
 
-* [twauth-web](https://github.com/twitterdev/twauth-web)
+* [twauth-web](https://github.com/Jv0id/twauth-web)
 
 # License
 
