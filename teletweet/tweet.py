@@ -73,7 +73,7 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
             chunks = [text[i:i + 110] for i in range(0, len(text), 110)]
             for chunk in chunks:
                 time.sleep(0.05)
-                client.create_tweet(text=chunk, media_ids=ids, in_reply_to_tweet_id=tweet_id)
+                status = client.create_tweet(text=chunk, media_ids=ids, in_reply_to_tweet_id=tweet_id)
                 response = status.data
         else:
             logging.error(traceback.format_exc())
