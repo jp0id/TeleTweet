@@ -9,6 +9,7 @@ __author__ = "Benny <benny.think@gmail.com>"
 
 import logging
 import re
+import time
 import traceback
 from typing import Union
 
@@ -69,9 +70,11 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
         if "Your Tweet text is too long." in str(e):
             logging.warning("Tweet too long, trying to make it shorter...")
             # try to post by making it shorter
-            client.create_tweet(text=text[:110] + "...", media_ids=ids, in_reply_to_tweet_id=tweet_id)
-            status = client.create_tweet(text="..." + text[105:220], media_ids=ids, in_reply_to_tweet_id=tweet_id)
-            response = status.data
+            chunks = [text[i:i + 110] for i in range(0, len(text), 110)]
+            for chunk in chunks:
+                time.sleep(0.05)
+                client.create_tweet(text=chunk, media_ids=ids, in_reply_to_tweet_id=tweet_id)
+                response = status.data
         else:
             logging.error(traceback.format_exc())
             response = {"error": str(e)}
