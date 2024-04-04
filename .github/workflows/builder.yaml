@@ -23,4 +23,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: jp0id/teletweet:v2
+          tags: jp0id/teletweet:v3

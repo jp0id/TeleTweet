@@ -53,28 +53,38 @@ def upload_media(api, pic) -> Union[list, None]:
 
 
 def send_tweet(message, pics: Union[list, None] = None) -> dict:
+    twitter_character_limit = 130
     logging.info("Preparing tweet for...")
     chat_id = message.chat.id
     text = message.text or message.caption
-    if not text:
-        text = ""
     tweet_id = __get_tweet_id_from_reply(message)
     client, api = __connect_twitter(chat_id)
+
+    if not text:
+        text = ""
+
     logging.info("Tweeting...")
     ids = upload_media(api, pics)
-    try:
-        status = client.create_tweet(text=text, media_ids=ids, in_reply_to_tweet_id=tweet_id)
-        logging.info("Tweeted")
-        response = status.data
-    except Exception as e:
-        if "Your Tweet text is too long." in str(e):
-            logging.warning("Tweet too long, trying to make it shorter...")
-            # try to post by making it shorter
-            status = client.create_tweet(text=text[:130] + "...", media_ids=ids, in_reply_to_tweet_id=tweet_id)
-            response = status.data
-        else:
+    response = dict()
+
+    while len(text) > 0:
+        try:
+            if len(text) <= twitter_character_limit:
+                status = client.create_tweet(text=text, media_ids=ids, in_reply_to_tweet_id=tweet_id)
+                text = ""
+            else:
+                split_point = text.rfind(' ', 0, twitter_character_limit)  # find last space within limit
+                if split_point == -1:  # a single word is longer than limit, split the word
+                    split_point = twitter_character_limit
+                status = client.create_tweet(text=text[:split_point] + "...", media_ids=ids, in_reply_to_tweet_id=tweet_id)
+                text = text[split_point:].lstrip()
+            logging.info("Tweeted")
+            tweet_id = status.data['id']  # for next 'in_reply_to_tweet_id'
+            response.update(status.data)
+        except Exception as e:
             logging.error(traceback.format_exc())
-            response = {"error": str(e)}
+            response.update({"error": str(e)})
+            break
 
     return response
 
