@@ -3,7 +3,6 @@
 
 # TeleTweet - tweet.py
 # 10/22/20 16:18
-#
 
 __author__ = "Benny <benny.think@gmail.com>"
 
@@ -73,13 +72,13 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
                 status = client.create_tweet(text=text, media_ids=ids, in_reply_to_tweet_id=tweet_id)
                 text = ""
             else:
-                split_point = text.rfind(' ', 0, twitter_character_limit)  # find last space within limit
-                if split_point == -1:  # a single word is longer than limit, split the word
+                split_point = text.rfind(' ', 0, twitter_character_limit)
+                if split_point == -1:
                     split_point = twitter_character_limit
                 status = client.create_tweet(text=text[:split_point] + "...", media_ids=ids, in_reply_to_tweet_id=tweet_id)
                 text = text[split_point:].lstrip()
             logging.info("Tweeted")
-            tweet_id = status.data['id']  # for next 'in_reply_to_tweet_id'
+            tweet_id = status.data['id']
             response.update(status.data)
         except Exception as e:
             logging.error(traceback.format_exc())

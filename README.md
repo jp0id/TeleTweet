@@ -36,6 +36,8 @@ delete - Delete tweet
 
 ## Screenshots
 
+## 长度大于130的中文tweet，将拆分为多段发送，且第二段的内容为第一段推文的回复信息。
+
 The most simple way to tweet!
 
 ![](assets/tweet.png)
