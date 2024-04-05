@@ -77,6 +77,8 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
                     split_point = twitter_character_limit
                 status = client.create_tweet(text=text[:split_point] + "[...]", media_ids=ids, in_reply_to_tweet_id=tweet_id)
                 text = "[...]" + text[split_point:].lstrip()
+                ids = None
+                time.sleep(1)
             logging.info("Tweeted")
             tweet_id = status.data['id']
             response.update(status.data)
