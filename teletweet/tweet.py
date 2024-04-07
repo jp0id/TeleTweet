@@ -56,6 +56,7 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
     logging.info("Preparing tweet for...")
     chat_id = message.chat.id
     text = message.text or message.caption
+    text_tmp = text
     tweet_id = __get_tweet_id_from_reply(message)
     client, api = __connect_twitter(chat_id)
 
@@ -66,6 +67,7 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
     ids = upload_media(api, pics)
     response = dict()
     response_tmp = dict()
+    i = 0
 
     while len(text) > 0:
         try:
@@ -78,7 +80,9 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
                 if split_point == -1:
                     split_point = twitter_character_limit
                 status = client.create_tweet(text=text[:split_point] + "[...]", media_ids=ids, in_reply_to_tweet_id=tweet_id)
-                response_tmp.update(status.data)
+                i += 1
+                if i == 1:
+                    response_tmp.update(status.data)
                 text = "[...]" + text[split_point:].lstrip()
                 ids = None
                 time.sleep(1)
@@ -88,7 +92,7 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
             logging.error(traceback.format_exc())
             response.update({"error": str(e)})
             break
-    if len(text) <= twitter_character_limit:
+    if len(text_tmp) <= twitter_character_limit:
         return response
     else:
         return response_tmp
