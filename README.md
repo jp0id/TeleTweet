@@ -4,12 +4,6 @@
 
 Supports Twitter API v2! 🎉🎉🎉🎉🎉🎉
 
-# This bot runs perfectly on DartNode!
-
-<a href="https://dartnode.com/?via=benny"><img src="assets/dartnode.png" width="500px"  alt="DartNode"/></a>
-
-Find out more on [DartNode](https://dartnode.com/?via=benny)
-
 # Features
 
 All the following features rely on authorized users.
