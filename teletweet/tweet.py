@@ -62,6 +62,7 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
 
     if not text:
         text = ""
+        text_tmp = ""
 
     logging.info("Tweeting...")
     ids = upload_media(api, pics)
