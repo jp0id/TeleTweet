@@ -70,6 +70,11 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
     response_tmp = dict()
     i = 0
 
+    if text == "":
+        status = client.create_tweet(text=text, media_ids=ids, in_reply_to_tweet_id=tweet_id)
+        response.update(status.data)
+        return response
+
     while len(text) > 0:
         try:
             if len(text) <= twitter_character_limit:
