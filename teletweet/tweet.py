@@ -52,7 +52,7 @@ def upload_media(api, pic) -> Union[list, None]:
 
 
 def send_tweet(message, pics: Union[list, None] = None) -> dict:
-    twitter_character_limit = 130
+    twitter_character_limit = 137
     logging.info("Preparing tweet for...")
     chat_id = message.chat.id
     text = message.text or message.caption
