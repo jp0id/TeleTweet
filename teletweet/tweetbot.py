@@ -9,10 +9,8 @@ __author__ = "Benny <benny.think@gmail.com>"
 
 import logging
 import os
-import tempfile
 from threading import Lock
 
-import requests
 from pyrogram import Client, enums, filters, types
 
 from config import APP_HASH, APP_ID, BOT_TOKEN, tweet_format
@@ -20,7 +18,6 @@ from helper import get_auth_data, sign_in, sign_off
 from tweet import (
     delete_tweet,
     get_me,
-    get_video_download_link,
     is_video_tweet,
     send_tweet,
 )
@@ -54,7 +51,7 @@ def sign_in_handler(client, message: types.Message):
         bot.send_message(message.chat.id, "You have already signed in, no need to do it again.")
         return
     message.reply_chat_action(enums.ChatAction.TYPING)
-    msg = "Click this [link](http://8.219.200.55:8888/) to login in you twitter." " When your login in is done, send auth code back to me"
+    msg = "Click this [link](https://tweet.jplife.fun/) to login in you twitter." " When your login in is done, send auth code back to me"
     bot.send_message(message.chat.id, msg, enums.ParseMode.MARKDOWN)
     STEP[message.chat.id] = "sign_in"
 
@@ -76,7 +73,8 @@ def sign_off_handler(client, message: types.Message):
 @bot.on_message(filters.command(["help"]))
 def help_handler(client, message: types.Message):
     message.reply_chat_action(enums.ChatAction.TYPING)
-    bot.send_message(message.chat.id, "\nAuthor: @jp0id\nTelegram: https://t.me/pm_jp_bot\nGithub: https://github.com/Jv0id")
+    bot.send_message(message.chat.id,
+                     "\nAuthor: @jp0id\nTelegram: https://t.me/pm_jp_bot\nGithub: https://github.com/Jv0id")
 
 
 @bot.on_message(filters.command(["ping"]))
@@ -91,7 +89,8 @@ def help_handler(client, message: types.Message):
     # TODO 暂时去除
     # info = get_runtime("botsrunner_teletweet_1")[:500]
     info = "This server is running. "
-    bot.send_message(message.chat.id, userinfo + info, parse_mode=enums.ParseMode.MARKDOWN, disable_web_page_preview=True)
+    bot.send_message(message.chat.id, userinfo + info, parse_mode=enums.ParseMode.MARKDOWN,
+                     disable_web_page_preview=True)
 
 
 @bot.on_message(filters.command(["delete"]))
@@ -140,15 +139,17 @@ def tweet_text_handler(client, message: types.Message):
     message.reply_chat_action(enums.ChatAction.TYPING)
     # first check if the user want to download video, gif
     tweet_id = is_video_tweet(message.chat.id, message.text)
-    if tweet_id and (message.text.startswith("https://twitter.com") or message.text.startswith("https://x.com")):
-        btn1 = types.InlineKeyboardButton("Download", callback_data=tweet_id)
+    # if tweet_id and (message.text.startswith("https://twitter.com") or message.text.startswith("https://x.com")):
+    if (message.text.startswith("https://twitter.com") or message.text.startswith("https://x.com")):
+        btn1 = types.InlineKeyboardButton("Skip", callback_data="skip")
         btn2 = types.InlineKeyboardButton("Tweet", callback_data="tweet")
         markup = types.InlineKeyboardMarkup(
             [
                 [btn1, btn2],
             ]
         )
-        message.reply_text("Do you want to download video or just tweet this?", quote=True, reply_markup=markup)
+        # message.reply_text("Do you want to download video or just tweet this?", quote=True, reply_markup=markup)
+        message.reply_text("Do you want to skip or just tweet this?", quote=True, reply_markup=markup)
         return
 
     result = send_tweet(message)
@@ -204,22 +205,34 @@ def notify_result(result, message: types.Message):
 def tweet_callback(client, call: types.CallbackQuery):
     result = send_tweet(call.message.reply_to_message)
     notify_result(result, call.message)
+    # -------------new-----------
+    chat_id = call.message.chat.id
+    message = call.message
+    bot.delete_messages(chat_id=chat_id, message_ids=message.id)
+    # -------------new-----------
 
 
 @bot.on_callback_query()
 def video_callback(client, call: types.CallbackQuery):
     chat_id = call.message.chat.id
     message = call.message
-    message.reply_chat_action(enums.ChatAction.TYPING)
-    bot.answer_callback_query(call.id, "Sure, wait a second.")
-    link = get_video_download_link(chat_id, call.data)
-    logging.info("Downloading %s ...", link)
-    r = requests.get(link, stream=True)
-    logging.info("Download complete")
-    message.reply_chat_action(enums.ChatAction.UPLOAD_VIDEO)
-    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as video_file:
-        video_file.write(r.content)
-        message.reply_video(video_file.name, quote=True)
+    bot.delete_messages(chat_id=chat_id, message_ids=message.id)
+
+
+# @bot.on_callback_query()
+# def video_callback(client, call: types.CallbackQuery):
+#     chat_id = call.message.chat.id
+#     message = call.message
+#     message.reply_chat_action(enums.ChatAction.TYPING)
+#     bot.answer_callback_query(call.id, "Sure, wait a second.")
+#     link = get_video_download_link(chat_id, call.data)
+#     logging.info("Downloading %s ...", link)
+#     r = requests.get(link, stream=True)
+#     logging.info("Download complete")
+#     message.reply_chat_action(enums.ChatAction.UPLOAD_VIDEO)
+#     with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as video_file:
+#         video_file.write(r.content)
+#         message.reply_video(video_file.name, quote=True)
 
 
 if __name__ == "__main__":
@@ -228,7 +241,7 @@ if __name__ == "__main__":
  ▌▞▀▖▐ ▞▀▖  ▌▌  ▌▞▀▖▞▀▖▜▀
  ▌▛▀ ▐ ▛▀   ▌▐▐▐ ▛▀ ▛▀ ▐ ▖
  ▘▝▀▘ ▘▝▀▘  ▘ ▘▘ ▝▀▘▝▀▘ ▀
- by BennyThink
+ by jp0id
     """
     print(f"\033[1;35m {banner}\033[0m")
     print("\033[1;36mTeletweet is running...\033[0m")
