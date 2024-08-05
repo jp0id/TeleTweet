@@ -30,5 +30,5 @@ Finally, revisit the dev portal, and add your app's callback URL (`https://your-
 ### Credits
 
 Original version by Jacob Petrie  
-https://twitter.com/jaakkosf  
+https://x.com/jaakkosf  
 https://github.com/jaakko-sf/twauth-web  

@@ -111,7 +111,7 @@ def get_me(chat_id) -> str:
         me = client.get_me().data
         name = me["name"]
         user_id = me["username"]
-        response = f"[{name}](https://twitter.com/{user_id})"
+        response = f"[{name}](https://x.com/{user_id})"
     except Exception as e:
         logging.error(traceback.format_exc())
         response = {"error": str(e)}
@@ -149,8 +149,8 @@ def __get_tweet_id_from_reply(message) -> int:
 
 def __get_tweet_id_from_url(url) -> int:
     try:
-        # https://twitter.com/williamwoo7/status/1326147700425809921?s=20
-        tweet_id = re.findall(r"https?://twitter\.com/.+/status/(\d+)", url)[0]
+        # https://x.com/williamwoo7/status/1326147700425809921?s=20
+        tweet_id = re.findall(r"https?://x\.com/.+/status/(\d+)", url)[0]
     except IndexError:
         tweet_id = None
     return tweet_id
@@ -194,5 +194,5 @@ def __get_video_url(json_dict: dict) -> str:
 
 
 if __name__ == "__main__":
-    print(__get_tweet_id_from_url("https://twitter.com/williamwoo7/status/1326147700425809921?s=20"))
-    print(__get_tweet_id_from_url("http://twitter.com/nixcraft/status/1326077772117078018?s=09"))
+    print(__get_tweet_id_from_url("https://x.com/williamwoo7/status/1326147700425809921?s=20"))
+    print(__get_tweet_id_from_url("http://x.com/nixcraft/status/1326077772117078018?s=09"))

@@ -71,7 +71,7 @@ Reply command `/delete` to bot's message and it will delete this tweet for you.
 
 You could just send any video tweet, such as this one
 
-https://twitter.com/BennyThinks/status/1306081739660427264?s=20
+https://x.com/jp0id/
 
 The bot will first determine if this is a video tweet, if the answer is yes,
 it will ask what do you want to do with it:

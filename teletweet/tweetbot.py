@@ -68,7 +68,7 @@ def sign_off_handler(client, message: types.Message):
 
     sign_off(str(message.chat.id))
     msg = (
-        "I'm sorry to see you go. I have deleted your oauth token." "By the way, you could also check [this link](https://twitter.com/settings/connected_apps)."
+        "I'm sorry to see you go. I have deleted your oauth token." "By the way, you could also check [this link](https://x.com/settings/connected_apps)."
     )
     bot.send_message(message.chat.id, msg, enums.ParseMode.MARKDOWN)
 
@@ -140,7 +140,7 @@ def tweet_text_handler(client, message: types.Message):
     message.reply_chat_action(enums.ChatAction.TYPING)
     # first check if the user want to download video, gif
     tweet_id = is_video_tweet(message.chat.id, message.text)
-    if tweet_id and message.text.startswith("https://twitter.com"):
+    if tweet_id and (message.text.startswith("https://twitter.com") or message.text.startswith("https://x.com")):
         btn1 = types.InlineKeyboardButton("Download", callback_data=tweet_id)
         btn2 = types.InlineKeyboardButton("Tweet", callback_data="tweet")
         markup = types.InlineKeyboardMarkup(

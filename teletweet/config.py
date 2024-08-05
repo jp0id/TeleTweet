@@ -16,4 +16,4 @@ APP_HASH = os.getenv("APP_HASH", "456gfhj78")
 CONSUMER_KEY = os.getenv("CONSUMER_KEY", "456fghj78")
 CONSUMER_SECRET = os.getenv("CONSUMER_SECRET", "45678fghj")
 
-tweet_format = "https://twitter.com/{screen_name}/status/{id}"
+tweet_format = "https://x.com/{screen_name}/status/{id}"
