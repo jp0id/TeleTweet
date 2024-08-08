@@ -5,7 +5,7 @@
 # 10/22/20 16:20
 #
 
-__author__ = "Benny <benny.think@gmail.com>"
+__author__ = "jp0id <jp@8void.com>"
 
 import os
 

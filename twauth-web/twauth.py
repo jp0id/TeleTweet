@@ -5,7 +5,7 @@
 # 10/31/20 18:32
 #
 
-__author__ = "Benny <benny.think@gmail.com>"
+__author__ = "jp0id <jp@8void.com>"
 
 import json
 import logging
