@@ -82,14 +82,16 @@ def send_tweet(message, pics: Union[list, None] = None) -> dict:
                 text = ""
                 response.update(status.data)
             else:
-                split_point = text.rfind(' ', 0, twitter_character_limit)
+                split_point = text.rfind('。', 0, twitter_character_limit)
                 if split_point == -1:
-                    split_point = twitter_character_limit
-                status = client.create_tweet(text=text[:split_point] + "[...]", media_ids=ids, in_reply_to_tweet_id=tweet_id)
+                    split_point = text.rfind('.', 0, twitter_character_limit)
+                    if split_point == -1:
+                        split_point = twitter_character_limit
+                status = client.create_tweet(text=text[:split_point + 1], media_ids=ids, in_reply_to_tweet_id=tweet_id)
                 i += 1
                 if i == 1:
                     response_tmp.update(status.data)
-                text = "[...]" + text[split_point:].lstrip()
+                text = text[split_point + 1:].lstrip()
                 ids = None
                 time.sleep(1)
             logging.info("Tweeted")
