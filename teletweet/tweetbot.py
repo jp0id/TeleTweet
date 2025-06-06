@@ -74,7 +74,7 @@ def sign_off_handler(client, message: types.Message):
 def help_handler(client, message: types.Message):
     message.reply_chat_action(enums.ChatAction.TYPING)
     bot.send_message(message.chat.id,
-                     "\nAuthor: @jp0id\nTelegram: https://t.me/pm_jp_bot\nGithub: https://github.com/Jv0id")
+                     "\nAuthor: @jp0id\nTelegram: https://t.me/pm_jp_bot\nGithub: https://github.com/jp0id")
 
 
 @bot.on_message(filters.command(["ping"]))
