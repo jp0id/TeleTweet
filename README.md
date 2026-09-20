@@ -167,6 +167,10 @@ docker-compose up -d
 - [x] start
 - [x] multi photo
 
+# Update
+目前X已经更新了api收费，需要预存之后才可使用。
+具体查看：https://docs.x.com/overview
+
 # Credits
 
 * [twauth-web](https://github.com/Jv0id/twauth-web)
